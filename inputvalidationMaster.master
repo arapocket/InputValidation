@@ -1,0 +1,259 @@
+﻿<%@ Master Language="VB" CodeFile="inputvalidationMaster.master.vb" Inherits="inputvalidationMaster" %>
+<%@ Register Assembly="MSCaptcha" Namespace="MSCaptcha" TagPrefix="cc1" %>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>home</title>
+
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/main.css" />
+</head>
+<body>
+<form id="form1" runat="server">
+<!-- CONTAINER -->
+<div class="container">
+<!-- header -->
+<header>
+            <div class ="row">
+
+                <div class="col-xs-4"></div>
+                <h1 class="col-xs-6">
+                    <a href="inputvalidationdefault.aspx" style="font-family: 'Lucida Console'; font-size: 28px; font-weight: bold; color: #0094ff; text-decoration: none;">Input Validation by Ara</a>
+                </h1>
+            </div>
+        </header>
+	
+<!-- GRADES -->
+<div class="">
+                <asp:Label ID="lblGradesUser" runat="server" Text="Your grades:" Visible="false"></asp:Label>
+                <asp:SqlDataSource ID="sqlDSGradesUser" runat="server" 
+                    ConnectionString="<%$ ConnectionStrings:cis491ConnectionString %>"></asp:SqlDataSource>
+                <asp:Label ID="Label1" runat="server" Text="Here are your current grades:" Visible="False"></asp:Label>
+			    <asp:GridView ID="gvGradesUser" runat="server" CellPadding="4" 
+                    ForeColor="Black" DataSourceID="sqlDSGradesUser" 
+                    GridLines="Horizontal" HorizontalAlign="Center" BackColor="White" 
+                    BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px" 
+                    Font-Size="Small" CssClass="table">
+			        <RowStyle HorizontalAlign="Center" />
+			    </asp:GridView>  
+			</div>
+          
+<!-- LOGIN -->
+<div class=" ara1">
+                <div class="row">
+<!-- empty col -->
+                    <div class="col-xs-4"></div>
+<!--Text Fields and Main Buttons --> 
+                    <div class="col-xs-4 textroundbox">
+
+                        <h3>Log In:</h3>
+<!--Username Field -->    
+            <div class="row">
+                <div class="col-xs-3">
+                    Username
+                </div>
+                <div class="col-xs-3 ">
+                    <asp:TextBox MaxLength="5" ID="tbUsername" runat="server" Width="150px"></asp:TextBox>
+                </div>
+            </div>
+<!--username validator --> 
+            <div class="row">
+                        <div class="col-xs-12 araredfont">
+                            <asp:RequiredFieldValidator runat="server" EnableClientScript="false" ID="reqName" ControlToValidate="tbUsername" ErrorMessage="Please enter a valid username, idiot." />
+                        </div>
+                    </div>
+<!--Password Field -->  
+            <div class="row">
+                <div class="col-xs-3">
+                    Password	      
+                </div>
+
+                <div class="col-xs-3">
+                    <asp:TextBox MaxLength="10" ID="tbPassword" TextMode="Password" runat="server" Width="150px"></asp:TextBox><br />
+                </div>
+            </div>
+
+<!--Password validator --> 
+            <div class="row">
+            <div class="col-xs-12 araredfont">
+            <asp:RequiredFieldValidator runat="server" EnableClientScript="false" ID="reqPass" ControlToValidate="tbPassword" ErrorMessage="Please enter a valid password, idiot." />
+            </div>
+            </div>  
+              
+
+<!--Captcha Field -->  
+            <div class="row">
+                <div class="col-xs-4" style=" color:#0094ff;">
+                    Enta Captcha!	      
+                </div>
+
+                <div class="col-xs-3">
+                <asp:TextBox ID="txtcaptcha" runat="server" Width="100px" Height="30px"></asp:TextBox>
+                </div>
+
+            </div>
+<!--Captcha validator --> 
+            <div class="row">
+                        <div class="col-xs-12 araredfont">
+                            <asp:RequiredFieldValidator runat="server" EnableClientScript="false" ID="captchavalidator" ControlToValidate="txtcaptcha" ValidationExpression="[a-zA-Z0-9]{1,5}" ErrorMessage="Please enter a valid captcha, idiot." />
+                        </div>
+                    </div>
+
+            <div class="row">
+                <br />
+                <br />
+                <div class="col-sm-1"></div>
+                <div class="col-sm-6">
+                        <cc1:CaptchaControl ID="Captcha1" runat="server"
+                    CaptchaBackgroundNoise="Low" CaptchaLength="5"
+                    CaptchaHeight="60" CaptchaWidth="200"
+                    CaptchaLineNoise="None" ErrorInputTooFast="Image text was typed too quickly. " 
+                            ErrorInputTooSlow="Image text was typed too slowly."
+                             CaptchaMinTimeout="5"
+                    CaptchaMaxTimeout="240" FontColor="#529E00" />
+                </div>
+                <div class="col-sm-5"></div>
+            </div>
+
+                        <!--Login / Reset Buttons -->  
+            <div>
+                        <br />
+                        <asp:Button ID="btnLogin" CausesValidation="false" OnClick="SubmitButton_Click" runat="server" Text="Login" />
+                        <asp:Button ID="btnReset" CausesValidation="false" runat="server" Text="Reset" />
+                        &nbsp;<asp:Label ID="lblLogin" runat="server" Text="" ForeColor="#CC3366"></asp:Label><br />
+                        <br />
+
+                        Send this to 10 people or you will die in ten days.
+                        <br />
+                        <br />
+                        <asp:Label ID="lblSQLStatement" runat="server" Text="SQL statement:" Visible="False" CssClass="main"></asp:Label><br />
+                        <br />
+                        <asp:Label ID="lblSQL" runat="server" Text="" ForeColor="#CC3366"></asp:Label>
+            </div>
+                    </div>
+<!-- empty col -->
+                    <div class="col-xs-4"></div> <!-- empty col -->
+                </div>
+
+
+                
+              
+
+            
+
+
+
+<!--Sidebar -->  
+            <div class="sidebar">
+                <asp:Label ID="lblStudentsAll" runat="server" Text="All students:" Visible="false"></asp:Label>
+                <asp:SqlDataSource ID="sqlDSStudentsAll" runat="server" 
+                    ConnectionString="<%$ ConnectionStrings:cis491ConnectionString %>"></asp:SqlDataSource>
+			    <asp:Label ID="Label2" runat="server" Text="Student List:" Visible="False"></asp:Label>
+			    <asp:GridView ID="gvStudentsAll" runat="server" CellPadding="4" ForeColor="Black" DataSourceID="sqlDSStudentsAll"
+                    GridLines="Horizontal" HorizontalAlign="Center" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px"
+                    Font-Size="Small" CssClass="table">
+			    <RowStyle HorizontalAlign="Center" />
+			    <HeaderStyle BackColor="#333333" Font-Bold="True" ForeColor="White" />
+			    </asp:GridView><br />
+                <asp:Label ID="lblGradesAll" runat="server" Text="All grades:" Visible="false"></asp:Label>
+                <asp:SqlDataSource ID="sqlDSGradesAll" runat="server" 
+                    ConnectionString="<%$ ConnectionStrings:cis491ConnectionString %>"></asp:SqlDataSource>
+			    <asp:Label ID="Label3" runat="server" Text="All Grades:" Visible="False"></asp:Label>
+			    <asp:GridView ID="gvGradesAll" runat="server" CellPadding="4" ForeColor="Black" DataSourceID="sqlDSGradesAll"
+                    GridLines="Horizontal" HorizontalAlign="Center" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px"
+                    Font-Size="Small" CssClass="table">
+			    <RowStyle HorizontalAlign="Center" />
+			    <HeaderStyle BackColor="#333333" Font-Bold="True" ForeColor="White" />
+			    </asp:GridView>                      
+			</div>
+    	
+<!--Bottom 4 Buttons --> 
+            <div class="row arabutton">
+            <div class="col-sm-3 ">
+                <asp:Button ID="blacklistbutton" CausesValidation="false" OnClick="SubmitButton_Click" runat="server" Text="Blacklist" />
+<!--blacklist validators --> 
+                <div>
+                <asp:RegularExpressionValidator ID="blacklistuser" ControlToValidate="tbUsername" ValidationExpression="[^^$\/()|?+*><{}[]{1,5}" ErrorMessage="Stop trying to hack us, ass." EnableClientScript="false" runat="server" />
+                <asp:RegularExpressionValidator ID="blacklistpass" ControlToValidate="tbPassword" ValidationExpression="[^^$\/()|?+*><{}[]{1,10}" ErrorMessage="Stop trying to hack us, ass." EnableClientScript="false" runat="server"   />
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <asp:Button ID="whitelistbutton" CausesValidation="false" OnClick="SubmitButton_Click" runat="server" Text="Whitelist" />
+<!--whitelist validators --> 
+                <div>
+                <asp:RegularExpressionValidator ID="whitelistuser" ControlToValidate="tbUsername" ValidationExpression="[a-zA-Z0-9]{1,5}" ErrorMessage="Stop trying to hack us, ass." EnableClientScript="false" runat="server" />
+                <asp:RegularExpressionValidator ID="whitelistpass" ControlToValidate="tbPassword" ValidationExpression="[a-zA-Z0-9]{1,10}" ErrorMessage="Stop trying to hack us, ass." EnableClientScript="false" runat="server"   />
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <asp:Button ID="sanitizationbutton" CausesValidation="false" OnClick="SubmitButton_Click" runat="server" Text="Sanitization" />
+<!--sanitization validators --> 
+                <div>
+                <asp:RegularExpressionValidator ID="sanitizationuser" ControlToValidate="tbUsername" ValidationExpression="[^^$\/()|?+*><{}[]{1,5}" ErrorMessage="Stop trying to hack us, ass." EnableClientScript="false" runat="server" />
+                <asp:RegularExpressionValidator ID="sanitizationpass" ControlToValidate="tbPassword" ValidationExpression="[^^$\/()|?+*><{}[]{1,10}" ErrorMessage="Stop trying to hack us, ass." EnableClientScript="false" runat="server"   />
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <asp:Button ID="htmlbutton" CausesValidation="false" OnClick="SubmitButton_Click" runat="server" Text="HTML Encode" />
+<!--html validators --> 
+                <div>
+                <asp:RegularExpressionValidator ID="htmluser" ControlToValidate="tbUsername" ValidationExpression="[^^$\/()|?+*><{}[]{1,5}" ErrorMessage="Stop trying to hack us, ass." EnableClientScript="false" runat="server" />
+                <asp:RegularExpressionValidator ID="htmlpass" ControlToValidate="tbPassword" ValidationExpression="[^^$\/()|?+*><{}[]{1,10}" ErrorMessage="Stop trying to hack us, ass." EnableClientScript="false" runat="server"   />
+                </div>
+            </div>
+
+                <asp:Label ID="Label4"
+                    runat="server" />
+        </div>
+
+
+
+
+<!--Row for message 1  --> 
+                    <div class="row araredfontsm">
+                    <div class="col-xs-4"></div>
+
+<!--messagelabel 1  --> 
+                    <div class="col-xs-8">
+                    <h1>
+                    <asp:Label ID="MessageLabel" runat="server" />
+                    <asp:Literal ID="literaluser" runat="server" />  
+
+                    </h1>
+                    </div>
+                    </div>
+<!--Row for message 2  -->
+                    <div ID="messagelabel2" class="row araredfontsm">
+                    <div class="col-xs-4"></div>
+                    <div class="col-xs-8"> <h1> 
+
+                        <asp:Label ID="MessageLabel2" runat="server" /> 
+
+                                           </h1>
+
+                    </div>
+                    </div>
+
+</div>
+
+              
+<!--ASP Content Placeholder -->               
+<div class="row">
+<asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+</asp:ContentPlaceHolder>
+</div>
+
+
+    </div>
+</form> 
+</body>
+
+</html>

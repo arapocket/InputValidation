@@ -1,0 +1,72 @@
+﻿body {
+    background-color: #000;
+    color: #333;
+    font-family: Gadugi, fantasy;
+    font-size: 12px;
+}
+
+
+.textroundbox {
+    width: auto;
+    padding: 10px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    overflow: hidden;
+    font-size: 14px;
+    font-family:'Lucida Console';
+    line-height: 30px;
+    color: #808080;
+    background: #000;
+    text-align: left;
+
+}
+
+.ara1 {
+    font-size: 14px;
+    font-family:'Lucida Console';
+    color: #808080;
+}
+
+.arabutton {
+   
+    text-align: center;
+    border-radius: 2px 2px 2px 2px;
+    border: 3px solid #480664;  
+}
+
+.araredfont {
+    color: #f00;
+}
+
+.araredfontsm {
+    color: #f00;
+    font-size: 3px;
+    font-family:'Segoe Marker';
+}
+
+    .textroundbox h3 {
+        font-size: 16px;
+        font-weight: bold;
+        margin-top: 0px;
+    }
+
+
+
+table.table {
+    width: 100%;
+}
+
+    table.table th {
+        background-color: #cccccc;
+        color: #000000;
+        border: 1px solid #eee;
+        font-size: 14px;
+        padding: 5px;
+        text-align: left;
+        text-decoration: bold;
+    }
+
+    table.table td {
+        border: 1px solid #eee;
+        padding: 5px;
+    }
